@@ -1,10 +1,10 @@
 "use client";
-import Header from "@/components/header/header";
-import About from "@/components/about/about";
-import Services from "@/components/services/services";
-import Location from "@/components/location/location";
-import Contact from "@/components/contact/contact";
-import Footer from "@/components/footer/footer";
+import Header from "@/components/Header/Header";
+import About from "@/components/About/About";
+import Services from "@/components/Services/Services";
+import Location from "@/components/Location/Location";
+import Contact from "@/components/Contact/Contact";
+import Footer from "@/components/Footer/Footer";
 
 export default function Home() {
   return (
