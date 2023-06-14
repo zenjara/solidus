@@ -22,7 +22,8 @@ export default async function handler(req, res) {
         // Prepare the email message
         const mailOptions = {
             from: 'ivan.matas2@gmail.com',
-            to: 'split.solidus@gmail.com',
+            to: 'ivan.matas@arsfutura.co',
+            // to: 'split.solidus@gmail.com',
             subject: 'Upit sa stranice',
             text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
         };
