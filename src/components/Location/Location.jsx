@@ -5,6 +5,7 @@ import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 const Location = () => {
     const {isVisible, ref} = useIntersectionObserver();
 
+
     return (
         <section
             ref={ref}
