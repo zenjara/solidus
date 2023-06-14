@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+body {
+    background-color: #252C3A;
+    color: whitesmoke;
+}
+
+header,
+section {
+    padding: 0;
+}
+
+section {
+    opacity: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.animate-section {
+    opacity: 1;
+    animation: animate-section 2s ease;
+}
+
+@keyframes animate-section {
+    0% {
+        opacity: 0;
+        padding-top: 70px;
+    }
+    100% {
+        opacity: 1;
+        padding-top: 0;
+    }
+}
