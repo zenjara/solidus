@@ -1,7 +1,7 @@
-import {useRef, useEffect, useState} from "react";
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./services.css";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faPersonDigging,
     faScrewdriverWrench,
@@ -10,9 +10,12 @@ import {
     faHome
 } from "@fortawesome/free-solid-svg-icons";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+import { LanguageContext } from "@/app/page";
+import { useContext } from "react";
 
 const Services = () => {
-    const {isVisible, ref} = useIntersectionObserver();
+    const { isVisible, ref } = useIntersectionObserver();
+    const { t } = useContext(LanguageContext)
 
     return (
         <section
@@ -21,40 +24,38 @@ const Services = () => {
                 isVisible ? "animate-section services-section" : "services-section"
             }
         >
-            <div className="services-title">
-                Što možemo <span>ponuditi</span>
-            </div>
+            <div className="services-title" dangerouslySetInnerHTML={{ __html: t['what_can_we_offer'] }} />
             <div className="services-offer">
                 <div className="service">
-                    <FontAwesomeIcon icon={faPersonDigging} className="icon"/>
-                    <h3>Izgradnja</h3>
+                    <FontAwesomeIcon icon={faPersonDigging} className="icon" />
+                    <h3>{t['construction']}</h3>
                     <span>
-            Izvodimo armirano-betonske, tesarske te zidarske radove, uključujući fasaderske radove. Radove izvodimo kao kooperanti na velikim projektima ili kao nosioci posla.
-          </span>
+                        {t['construction_text']}
+                    </span>
                 </div>
                 <div className="service">
-                    <FontAwesomeIcon icon={faScrewdriverWrench} className="icon"/>
-                    <h3>Adaptacija</h3>
+                    <FontAwesomeIcon icon={faScrewdriverWrench} className="icon" />
+                    <h3>{t['adaptation']}</h3>
                     <span>
-            Adaptacijski radovi, adaptacija stana, adaptacija kuće ili adaptacija poslovnog prostora obuhvaća izvedbu raznih građevinskih radova na uređenju interijera kako bi stvorio kvalitetniji i ugodniji prostor za boravak.
-          </span>
+                        {t['adaptation_text']}
+                    </span>
                 </div>
                 <div className="service">
-                    <FontAwesomeIcon icon={faTrowelBricks} className="icon"/>
-                    <h3>Renovacija</h3>
+                    <FontAwesomeIcon icon={faTrowelBricks} className="icon" />
+                    <h3>{t['renovation']}</h3>
                     <span>
-            Obnavljanje i uređenje stambenih objekata, objekata pod kulturnom zaštitom, svih poslovnih, sportskih, društvenih i industrijskih objekata koji pripadaju ovoj vrsti djelatnosti.
-          </span>
+                        {t['renovation_text']}
+                    </span>
                 </div>
                 <div className="service">
-                    <FontAwesomeIcon icon={faHome} className="icon"/>
-                    <h3>Ključ u ruke</h3>
+                    <FontAwesomeIcon icon={faHome} className="icon" />
+                    <h3>{t['turnkey']}</h3>
                     <span>
-            Nudimo izvođenje svih radova na izgradnji obiteljskih kuća te manjih stambenih i poslovnih zgrada. Garantiramo visoku kvalitetu te udobnost življenja. Radove izvodimo po sistemu ‘visoki roh-bau’ ili ‘ključ u ruke’.​
-          </span>
+                        {t['turnkey_text']}
+                    </span>
                 </div>
             </div>
-        </section>
+        </section >
     );
 };
 

@@ -1,46 +1,151 @@
+'use client'
 import styles from "./header.css";
 import Image from "next/image";
 import image1 from "../../../public/construction1-unsplash.jpg";
 import image2 from "../../../public/construction2-unsplash.jpg";
-import {TypeAnimation} from "react-type-animation";
+import { TypeAnimation } from "react-type-animation";
+import { useTranslation } from 'next-i18next'
+import { LanguageContext } from "@/app/page";
+import { useState, useContext, useEffect } from "react";
+import Select from 'react-select'
+import Portal from '../Portal/Portal'
+import {
+    faBars,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const options = [
+    { value: 'en', label: '🇬🇧 EN' },
+    { value: 'hr', label: '🇭🇷 HR' },
+]
 
 const Header = () => {
+    const { lang, t, setLang } = useContext(LanguageContext)
+    const [showMenu, setShowMenu] = useState(false)
+    const sequence = [t['build'], 2000, t['renovate'], 2000, t['adapt'], 2000]
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > 60) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     return (
         <header>
             <div className='overlay'></div>
-            <nav className="nav-bar">
+            <nav className={`nav-bar ${isScrolled ? "nav-scrolled" : ""}`}>
                 <span>SOLIDUS d.o.o.</span>
-                <ul>
-                    <li>
+
+                <div className="nav-menu" onClick={() => setShowMenu(true)}><FontAwesomeIcon icon={faBars} style={{ height: '30px' }} /></div>
+                <div className="nav-items">
+                    <div>
                         <a className="nav-a" href="#about">
-                            O nama
+                            {t['about']}
                         </a>
-                    </li>
-                    <li>
+                    </div>
+                    <div>
                         <a className="nav-a" href="#contact">
-                            Kontakt
+                            {t['contact']}
                         </a>
-                    </li>
-                </ul>
+                    </div>
+                    <Select options={options} defaultValue={options[0]} onChange={(option) => setLang(option.value)} unstyled isSearchable={false} styles={{
+                        container: (provided, state) => ({ display: 'flex' }),
+                        menu: (provided, state) => ({
+                            ...provided,
+                            backgroundColor: '#212529',
+                            cursor: 'pointer',
+                            color: "#000",
+                            width: 'fit-content',
+                            border: '2px  solid rgba(218, 162, 27, 0.3);'
+                        }),
+                        control: (provided, state) => ({
+                            ...provided,
+                            padding: '12px',
+                            cursor: 'pointer',
+                        }),
+                        option: (defaultStyles, state) => ({
+                            ...defaultStyles,
+                            width: '100%',
+                            padding: '8px 24px',
+                            color: state.isSelected ? "#fff" : "#fff",
+                            cursor: 'pointer',
+                            backgroundColor: "#212529",
+                            '&:hover': {
+                                backgroundColor: "rgba(218, 162, 27)"
+                            }
+                        }),
+                    }} />
+                </div>
+
+                {showMenu && <Portal className='mobile-menu'>
+                    <button className="close-bttn" onClick={() => setShowMenu(false)}>X</button>
+                    <div className="nav-items">
+                        <div>
+                            <a className="nav-a" href="#about" onClick={() => setShowMenu(false)}>
+                                {t['about']}
+                            </a>
+                        </div>
+                        <div>
+                            <a className="nav-a" href="#contact" onClick={() => setShowMenu(false)}>
+                                {t['contact']}
+                            </a>
+                        </div>
+                        <Select options={options} defaultValue={options[0]} onChange={(option) => setLang(option.value)} unstyled isSearchable={false} styles={{
+                            container: (provided, state) => ({ display: 'flex' }),
+                            menu: (provided, state) => ({
+                                ...provided,
+                                backgroundColor: '#212529',
+                                cursor: 'pointer',
+                                color: "#000",
+                                width: '140px',
+                                border: '2px  solid rgba(218, 162, 27, 0.3);'
+                            }),
+                            control: (provided, state) => ({
+                                ...provided,
+                                padding: '12px',
+                                cursor: 'pointer',
+                            }),
+                            option: (provided, state) => ({
+                                ...provided,
+                                width: '100%',
+                                padding: '8px 24px',
+                                color: state.isSelected ? "#fff" : "#fff",
+                                cursor: 'pointer',
+                                backgroundColor: "#212529",
+                                '&:hover': {
+                                    backgroundColor: "rgba(218, 162, 27)"
+                                }
+                            }),
+                        }} />
+                    </div>
+                </Portal>}
             </nav>
-            <div className="header-section">
+
+
+            <div className="header-section" key={sequence}>
                 <div className="company-content">
                     <h1 className="company-name">SOLIDUS</h1>
                     <div className="company-description">
-                        <div className="static-txt">Možemo</div>
+                        <div className="static-txt">{t['we_can']}</div>
                         <TypeAnimation
                             className="dynamic-txt"
                             speed={60}
-                            sequence={["graditi", 2000, "renovirati", 2000, "adaptirati", 2000]}
+                            sequence={sequence}
                             repeat={Infinity}
                         />
                     </div>
-                    <button>Kontakt</button>
+                    <button>{t['contact']}</button>
                 </div>
-                {/*<div className="images-show">*/}
-                {/*    <Image className="image image-1" src={image1} alt=''/>*/}
-                {/*    <Image className="image image-2" src={image2} alt=''/>*/}
-                {/*</div>*/}
             </div>
         </header>
     );

@@ -1,14 +1,14 @@
-import {useState} from "react";
+import { useState } from "react";
 import styles from "./contact.css";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-
+import { useContext } from "react";
+import { LanguageContext } from "@/app/page";
 
 const Contact = () => {
-    const {isVisible, ref} = useIntersectionObserver();
+    const { t } = useContext(LanguageContext)
+    const { isVisible, ref } = useIntersectionObserver();
     const [successMessage, setSuccessMessage] = useState(undefined)
-    // const [successMessage, setSuccessMessage] = useState('Poruka je uspješno poslana!')
     const [errorMessage, setErrorMessage] = useState(undefined)
-    // const [errorMessage, setErrorMessage] = useState('Dogodila se greška prilikom slanja :( . Molimo pokušajte ponovno.')
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [message, setMessage] = useState('')
@@ -21,7 +21,7 @@ const Contact = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({name, email, message}),
+                body: JSON.stringify({ name, email, message }),
             });
 
             if (response.ok) {
@@ -45,21 +45,19 @@ const Contact = () => {
 
             <div className="contact-wraper">
                 <div className="contact-us-left">
-                    <div className="contact-us-title">
-                        Pošaljite nam <span>upit</span>
-                    </div>
+                    <div className="contact-us-title" dangerouslySetInnerHTML={{ __html: t['contact_us'] }} />
                     <form onSubmit={handleSubmit}>
-                        <input type="text" placeholder="Ime i Prezime" value={name}
-                               onChange={(e) => setName(e.target.value)}/>
-                        <input type="email" placeholder="Email" required value={email}
-                               onChange={(e) => setEmail(e.target.value)}/>
-                        <textarea placeholder="Poruka" value={message}
-                                  onChange={(e) => setMessage(e.target.value)}></textarea>
-                        <button type="submit">Pošalji</button>
+                        <input type="text" placeholder={t['full_name']} value={name}
+                            onChange={(e) => setName(e.target.value)} />
+                        <input type="email" placeholder={t['email']} required value={email}
+                            onChange={(e) => setEmail(e.target.value)} />
+                        <textarea placeholder={t['message']} value={message}
+                            onChange={(e) => setMessage(e.target.value)}></textarea>
+                        <button type="submit">{t['send']}</button>
                         {errorMessage &&
                             <div onClick={() => setErrorMessage(undefined)} className='error'>{errorMessage}</div>}
                         {successMessage && <div onClick={() => setSuccessMessage(undefined)}
-                                                className='success'>{successMessage}</div>}
+                            className='success'>{successMessage}</div>}
                     </form>
 
                 </div>
