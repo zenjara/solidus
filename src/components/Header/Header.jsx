@@ -26,8 +26,10 @@ const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false);
 
     useEffect(() => {
+        const contentElement = document.getElementsByTagName('body')[0];
+
         const handleScroll = () => {
-            const currentScrollY = window.scrollY;
+            const currentScrollY = contentElement.scrollTop;
             if (currentScrollY > 60) {
                 setIsScrolled(true);
             } else {
@@ -35,15 +37,16 @@ const Header = () => {
             }
         };
 
-        window.addEventListener("scroll", handleScroll, { passive: true });
+        contentElement.addEventListener('scroll', handleScroll, { passive: true });
 
-        return () => window.removeEventListener("scroll", handleScroll);
+        return () => contentElement.removeEventListener('scroll', handleScroll);
     }, []);
+
 
     return (
         <header>
             <div className='overlay'></div>
-            <nav className={`nav-bar ${isScrolled ? "nav-scrolled" : ""}`}>
+            <nav className={`nav-bar ${isScrolled ? "nav-scrolled" : ""}`} id='header'>
                 <span>SOLIDUS d.o.o.</span>
 
                 <div className="nav-menu" onClick={() => setShowMenu(true)}><FontAwesomeIcon icon={faBars} style={{ height: '30px' }} /></div>

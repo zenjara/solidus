@@ -12,8 +12,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-      <html lang="en">
-      <body className={ubuntu.className}>{children}</body>
+      <html lang="en" style={{height: '100%', width: '100%'}}>
+      <body className={ubuntu.className} style={{height: '100%', width: '100%'}}>{children}</body>
       </html>
   );
 }
